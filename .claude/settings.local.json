@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"const fs=require\\('fs'\\); const html=fs.readFileSync\\('index.html','utf8'\\); const scripts=[...html.matchAll\\(/<script>\\([\\\\s\\\\S]*?\\)<\\\\/script>/g\\)].map\\(m=>m[1]\\); for \\(const script of scripts\\) new Function\\(script\\); console.log\\('scripts ok:', scripts.length\\);\")",
+      "WebSearch"
+    ]
+  }
+}

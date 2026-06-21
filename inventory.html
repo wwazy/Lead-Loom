@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>像素豆统计 · Bead Loom</title>
+  <link rel="stylesheet" href="assets/styles.css?v=10" />
+</head>
+<body data-page="inventory">
+  <aside class="side-nav">
+    <a class="brand" href="convert.html" aria-label="Bead Loom"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span><strong>Bead Loom</strong><small>inventory</small></span></a>
+    <nav aria-label="主导航">
+      <a href="convert.html"><span>▦</span>图片转换</a>
+      <a href="editor.html"><span>✦</span>沉浸编辑</a>
+      <a href="library.html"><span>□</span>图案库</a>
+      <a class="active" href="inventory.html"><span>●</span>像素豆统计</a>
+      <a href="export.html"><span>↧</span>导出</a>
+    </nav>
+  </aside>
+
+  <main class="page">
+    <header class="page-head compact">
+      <div><p class="eyebrow">像素豆统计</p><h1>合并颜色用量</h1></div>
+      <div class="head-actions">
+        <button class="button" id="exportPngBtn">导出 PNG</button>
+        <button class="button primary" id="exportPdfBtn">导出 PDF</button>
+      </div>
+    </header>
+    <section class="stats-grid wide">
+      <label class="metric-card control-metric"><span>备货比例</span><input id="reserveRange" type="range" min="0" max="30" value="10" /><strong><output id="reserveOut">10%</output></strong></label>
+      <div class="metric-card"><strong id="totalBeads">0</strong><span>总豆数</span></div>
+      <div class="metric-card"><strong id="totalColors">0</strong><span>颜色种类</span></div>
+      <div class="metric-card"><strong id="reserveBeads">0</strong><span>备货后数量</span></div>
+    </section>
+    <section class="panel padded-table">
+      <table class="bead-table" aria-label="颜色统计">
+        <thead><tr><th>编码</th><th>颜色</th><th>用量</th><th>准备量</th></tr></thead>
+        <tbody id="inventoryBody"></tbody>
+      </table>
+    </section>
+  </main>
+  <div class="toast" id="toast"></div>
+  <script src="assets/palettes.js?v=10"></script>
+  <script src="assets/app.js?v=10"></script>
+</body>
+</html>

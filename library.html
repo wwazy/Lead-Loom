@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>图案库 · Bead Loom</title>
+  <link rel="stylesheet" href="assets/styles.css?v=10" />
+</head>
+<body data-page="library">
+  <aside class="side-nav">
+    <a class="brand" href="convert.html" aria-label="Bead Loom"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span><strong>Bead Loom</strong><small>library</small></span></a>
+    <nav aria-label="主导航">
+      <a href="convert.html"><span>▦</span>图片转换</a>
+      <a href="editor.html"><span>✦</span>沉浸编辑</a>
+      <a class="active" href="library.html"><span>□</span>图案库</a>
+      <a href="inventory.html"><span>●</span>像素豆统计</a>
+      <a href="export.html"><span>↧</span>导出</a>
+    </nav>
+  </aside>
+
+  <main class="page">
+    <header class="page-head compact">
+      <div><p class="eyebrow">图案库</p><h1>管理已转换图案</h1></div>
+      <a class="button primary" href="convert.html">新增图案</a>
+    </header>
+    <section class="panel">
+      <div class="panel-bar padded">
+        <h2>图案列表</h2>
+        <div class="filter-row"><input id="librarySearch" type="search" placeholder="搜索图案" /><select id="librarySort"><option value="new">最新</option><option value="beads">豆数最多</option><option value="colors">颜色最多</option></select></div>
+      </div>
+      <div class="pattern-grid" id="patternGrid"></div>
+    </section>
+  </main>
+  <div class="toast" id="toast"></div>
+  <script src="assets/palettes.js?v=10"></script>
+  <script src="assets/app.js?v=10"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>导出 · Bead Loom</title>
+  <link rel="stylesheet" href="assets/styles.css?v=10" />
+</head>
+<body data-page="export">
+  <aside class="side-nav">
+    <a class="brand" href="convert.html" aria-label="Bead Loom"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span><strong>Bead Loom</strong><small>export</small></span></a>
+    <nav aria-label="主导航">
+      <a href="convert.html"><span>▦</span>图片转换</a>
+      <a href="editor.html"><span>✦</span>沉浸编辑</a>
+      <a href="library.html"><span>□</span>图案库</a>
+      <a href="inventory.html"><span>●</span>像素豆统计</a>
+      <a class="active" href="export.html"><span>↧</span>导出</a>
+    </nav>
+  </aside>
+
+  <main class="page">
+    <header class="page-head compact">
+      <div><p class="eyebrow">导出</p><h1>输出图案图片</h1></div>
+      <button class="button primary" id="downloadBtn">导出选中图案</button>
+    </header>
+    <section class="layout-two">
+      <form class="panel controls">
+        <h2>水印</h2>
+        <label>水印文字<input id="watermarkText" type="text" value="Bead Loom" /></label>
+        <label>透明度 <output id="opacityOut">32%</output><input id="watermarkOpacity" type="range" min="5" max="80" value="32" /></label>
+        <label>密度 <output id="densityOut">中</output><input id="watermarkDensity" type="range" min="1" max="5" value="3" /></label>
+        <div class="toggle-list">
+          <label class="toggle-row"><span>添加斜向水印</span><label class="switch"><input id="includeWatermark" type="checkbox" checked /><i></i></label></label>
+          <label class="toggle-row"><span>增加统计信息</span><label class="switch"><input id="includeStats" type="checkbox" checked /><i></i></label></label>
+        </div>
+        <label class="drop-zone slim">
+          <input id="watermarkUpload" type="file" accept="image/*" />
+          <span class="drop-icon" aria-hidden="true">＋</span>
+          <span class="drop-title">自定义水印图片</span>
+        </label>
+      </form>
+      <section class="panel">
+        <div class="panel-bar padded">
+          <h2>选择图案</h2>
+          <div class="panel-actions">
+            <button class="button small" id="selectAllExportBtn">全选</button>
+            <button class="button small" id="deselectAllExportBtn">取消全选</button>
+          </div>
+        </div>
+        <p class="limit-note pad-x">单击图案切换选中（高亮框），双击查看大图。</p>
+        <div class="pattern-grid compact" id="exportGrid"></div>
+      </section>
+    </section>
+  </main>
+  <dialog id="detailDialog" class="detail-dialog">
+    <div class="detail-stage"><canvas id="detailCanvas" width="720" height="720"></canvas></div>
+    <div class="dialog-actions"><a class="button" href="editor.html">编辑</a><button class="button primary" id="closeDialogBtn">关闭</button></div>
+  </dialog>
+  <div class="toast" id="toast"></div>
+  <script src="assets/palettes.js?v=10"></script>
+  <script src="assets/app.js?v=10"></script>
+</body>
+</html>

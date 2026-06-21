@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>图片转换 · Bead Loom</title>
+  <link rel="stylesheet" href="assets/styles.css?v=10" />
+</head>
+<body data-page="convert">
+  <aside class="side-nav">
+    <a class="brand" href="convert.html" aria-label="Bead Loom">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <span><strong>Bead Loom</strong><small>MARD palette studio</small></span>
+    </a>
+    <nav aria-label="主导航">
+      <a class="active" href="convert.html"><span>▦</span>图片转换</a>
+      <a href="editor.html"><span>✦</span>沉浸编辑</a>
+      <a href="library.html"><span>□</span>图案库</a>
+      <a href="inventory.html"><span>●</span>像素豆统计</a>
+      <a href="export.html"><span>↧</span>导出</a>
+    </nav>
+  </aside>
+
+  <main class="page">
+    <header class="page-head compact">
+      <div>
+        <p class="eyebrow">图片转换</p>
+        <h1>生成可编辑像素图案</h1>
+      </div>
+      <div class="head-actions">
+        <a class="button ghost" href="library.html">图案库</a>
+        <a class="button primary" href="editor.html">进入沉浸编辑</a>
+      </div>
+    </header>
+
+    <section class="layout-two">
+      <form class="panel controls" id="convertForm">
+        <div class="mode-switch">
+          <span>图片转换</span>
+          <label class="switch"><input type="checkbox" id="readerToggle" /><i></i></label>
+          <span>读取像素图案</span>
+        </div>
+
+        <label class="drop-zone" id="dropZone">
+          <input id="imageInput" type="file" accept="image/*" />
+          <span class="drop-icon" aria-hidden="true">＋</span>
+          <span class="drop-title">选择文件</span>
+          <span class="drop-hint">点击上传图片，支持裁剪</span>
+        </label>
+
+        <div class="crop-wrap" data-when="crop">
+          <div class="canvas-stage tight"><canvas id="cropCanvas" width="360" height="240"></canvas></div>
+          <button class="button small ghost" type="button" id="resetCropBtn">重置裁剪</button>
+        </div>
+
+        <div class="segmented" role="tablist" aria-label="尺寸模式">
+          <button type="button" class="active" data-mode="smart">默认尺寸</button>
+          <button type="button" data-mode="size">宽高</button>
+          <button type="button" data-mode="resolution">分辨率</button>
+        </div>
+
+        <div class="control-group" data-panel="smart">
+          <div class="metric-card"><strong id="smartSize">48 × 48</strong><span>默认平衡细节与豆数</span></div>
+          <button class="button full" type="button" id="useSmartBtn">使用默认尺寸</button>
+        </div>
+
+        <div class="control-group hidden" data-panel="size">
+          <label>宽度像素 <output id="widthOut">48</output><input id="pixelWidth" type="range" min="12" max="96" value="48" /></label>
+          <input id="widthNumber" type="number" min="12" max="96" value="48" />
+          <label>高度像素 <output id="heightOut">48</output><input id="pixelHeight" type="range" min="12" max="96" value="48" /></label>
+          <input id="heightNumber" type="number" min="12" max="96" value="48" />
+          <p class="limit-note">范围 12–96，最大 9,216 颗，避免浏览器卡死。</p>
+        </div>
+
+        <div class="control-group hidden" data-panel="resolution">
+          <label>目标总豆数 <output id="resolutionOut">2304</output><input id="resolutionRange" type="range" min="144" max="9216" step="144" value="2304" /></label>
+          <input id="resolutionNumber" type="number" min="144" max="9216" step="144" value="2304" />
+          <p class="limit-note">范围 144–9,216，系统按图片比例计算宽高。</p>
+        </div>
+
+        <div class="field-row">
+          <label>颜色编码<select id="paletteSelect">
+            <option value="MARD221">MARD 标准 221</option>
+            <option value="MARD291">MARD 全色 291</option>
+            <option value="Artkal176">Artkal</option>
+            <option value="Perler">Perler（基础）</option>
+            <option value="Hama">Hama（基础）</option>
+            <option value="Nabbi">Nabbi（基础）</option>
+          </select></label>
+          <label><span id="methodLabel">转换方法</span><select id="methodSelect"><option value="crisp">清晰（推荐）</option><option value="crisp8">清晰（次推荐）</option><option value="nearest">最近色</option><option value="dither">抖动扩散</option><option value="contrast">高对比</option><option value="soft">柔和渐变</option><option value="poster">海报分层</option></select></label>
+        </div>
+
+        <div class="field-row" data-when="convert-only">
+          <label>质量档<select id="qualitySelect"><option value="default">默认</option><option value="fast">快速（CIE94）</option><option value="quality">质量（CIEDE2000）</option></select></label>
+          <label>取样方式<select id="sampleSelect"><option value="default">默认</option><option value="dominant">主导色</option><option value="smooth">平滑</option></select></label>
+        </div>
+
+        <div class="check-list">
+          <label class="check-chip"><input id="showCodes" type="checkbox" /> <span>显示颜色代码</span></label>
+          <label class="check-chip"><input id="showGrid" type="checkbox" checked /> <span>显示网格</span></label>
+          <label class="check-chip"><input id="strongCast" type="checkbox" /> <span>低质量图片增强校色（去偏绿）</span></label>
+        </div>
+
+        <button class="button primary full" type="button" id="convertBtn">生成图案</button>
+        <button class="button full" type="button" id="savePatternBtn">保存到图案库</button>
+      </form>
+
+      <section class="panel canvas-panel">
+        <div class="panel-bar">
+          <h2>预览</h2>
+          <div class="panel-actions">
+            <button class="button small" id="undoBtn">撤销</button>
+            <button class="button small" id="redoBtn">恢复</button>
+            <button class="button small" id="optimizeBtn">自动优化</button>
+            <a class="button small dark" href="editor.html">编辑</a>
+          </div>
+        </div>
+        <div class="zoom-row preview-zoom">
+          <button class="button small" type="button" id="previewZoomOutBtn">−</button>
+          <input id="previewZoom" type="range" min="100" max="600" value="100" />
+          <button class="button small" type="button" id="previewZoomInBtn">＋</button>
+          <output id="previewZoomOut">100%</output>
+        </div>
+        <div class="canvas-stage scroll-stage"><canvas id="patternCanvas" width="720" height="720"></canvas></div>
+        <div class="stats-grid" id="quickStats"></div>
+      </section>
+    </section>
+  </main>
+  <div class="toast" id="toast"></div>
+  <script src="assets/palettes.js?v=10"></script>
+  <script src="assets/app.js?v=10"></script>
+</body>
+</html>

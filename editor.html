@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>沉浸编辑 · Bead Loom</title>
+  <link rel="stylesheet" href="assets/styles.css?v=10" />
+</head>
+<body data-page="editor" class="editor-body">
+  <aside class="side-nav compact-nav">
+    <a class="brand" href="convert.html" aria-label="Bead Loom"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span><strong>Bead Loom</strong><small>editor</small></span></a>
+    <nav aria-label="主导航">
+      <a href="convert.html"><span>▦</span>图片转换</a>
+      <a class="active" href="editor.html"><span>✦</span>沉浸编辑</a>
+      <a href="library.html"><span>□</span>图案库</a>
+      <a href="inventory.html"><span>●</span>像素豆统计</a>
+      <a href="export.html"><span>↧</span>导出</a>
+    </nav>
+  </aside>
+
+  <main class="editor-shell">
+    <header class="editor-topbar">
+      <div>
+        <p class="eyebrow">沉浸编辑</p>
+        <h1>像素画布</h1>
+      </div>
+      <div class="head-actions">
+        <button class="button" id="undoBtn">撤销</button>
+        <button class="button" id="redoBtn">恢复</button>
+        <button class="button" id="fitBtn">适合屏幕</button>
+        <button class="button" id="fullscreenBtn">全屏</button>
+        <a class="button primary" href="convert.html">退出编辑</a>
+      </div>
+    </header>
+
+    <section class="editor-grid">
+      <aside class="tool-panel panel">
+        <h2>工具</h2>
+        <div class="tool-grid tool-grid-3">
+          <button class="tool active" data-tool="paint">画笔</button>
+          <button class="tool" data-tool="select">多选</button>
+          <button class="tool" data-tool="pan">拖拽</button>
+        </div>
+        <label>缩放 <output id="zoomOut">100%</output>
+          <div class="zoom-row">
+            <button class="button small" type="button" id="zoomOutBtn">−</button>
+            <input id="zoomRange" type="range" min="60" max="1000" value="100" />
+            <button class="button small" type="button" id="zoomInBtn">＋</button>
+          </div>
+        </label>
+        <label>颜色编码<select id="paletteSelect">
+          <option value="MARD221">MARD 标准 221</option>
+          <option value="MARD291">MARD 全色 291</option>
+          <option value="Artkal176">Artkal</option>
+          <option value="Perler">Perler（基础）</option>
+          <option value="Hama">Hama（基础）</option>
+          <option value="Nabbi">Nabbi（基础）</option>
+        </select></label>
+        <div class="check-list">
+          <label class="check-chip"><input id="showCodes" type="checkbox" /> <span>显示颜色代码</span></label>
+          <label class="check-chip"><input id="showGrid" type="checkbox" checked /> <span>显示网格</span></label>
+        </div>
+        <div>
+          <h3 class="panel-sub">颜色编码</h3>
+          <div class="palette-list" id="editorPalette"></div>
+        </div>
+        <label>画笔自定义颜色
+          <div class="custom-brush-row">
+            <input id="brushColor" type="color" value="#c65b3b" />
+            <button class="button small" type="button" id="matchBrushColorBtn">匹配配色</button>
+          </div>
+        </label>
+        <div class="palette-list nearest-list hidden" id="brushMatches"></div>
+        <div class="inline-actions">
+          <button class="button small" type="button" id="brushSchemeBtn">所有颜色</button>
+          <button class="button small" type="button" id="brushTransparentBtn">透明色</button>
+        </div>
+        <div class="palette-list scheme-list hidden" id="brushScheme"></div>
+        <details id="historyColorsWrap" class="history-colors">
+          <summary>历史颜色 (0)</summary>
+          <div class="palette-list" id="historyColors"></div>
+        </details>
+      </aside>
+
+      <section class="editor-stage panel" id="stageScroller">
+        <canvas id="patternCanvas" width="900" height="900"></canvas>
+      </section>
+
+      <aside class="tool-panel panel">
+        <h2>批量与优化</h2>
+        <p class="limit-note">用「多选」选中像素，再在此替换颜色。</p>
+        <label>替换为<select id="replaceSelect"></select></label>
+        <input id="replaceCustomColor" class="hidden" type="color" value="#c65b3b" />
+        <div class="palette-list nearest-list hidden" id="replaceMatches"></div>
+        <div class="inline-actions">
+          <button class="button small" type="button" id="replaceSchemeBtn">所有颜色</button>
+          <button class="button small" type="button" id="replaceTransparentBtn">透明色</button>
+        </div>
+        <div class="palette-list scheme-list hidden" id="replaceScheme"></div>
+        <button class="button full" id="replaceBtn">替换所选颜色</button>
+        <button class="button full" id="bgTransparentBtn">背景设为透明</button>
+        <button class="button full" id="optimizeBtn">自动优化配色</button>
+        <div class="metric-card"><strong id="selectionCount">0</strong><span>已选像素</span></div>
+        <button class="button primary full" id="savePatternBtn">保存修改</button>
+        <button class="button full" id="saveToLibraryBtn">保存到图库</button>
+      </aside>
+    </section>
+  </main>
+  <div class="toast" id="toast"></div>
+  <script src="assets/palettes.js?v=10"></script>
+  <script src="assets/app.js?v=10"></script>
+</body>
+</html>
